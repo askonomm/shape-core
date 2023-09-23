@@ -30,31 +30,36 @@ class Core
         $this->router->get("/admin/setup", [SetupController::class, "index"]);
     }
 
-    private function setAppRoutes($router): void
+    private function setAppRoutes($routes): void
     {
-        $router($this->router);
+        $routes($this->router);
     }
 
     private function bootstrap(): void
     {
         if (!defined("__ROOT__")) {
-            define("__ROOT__", dirname(__DIR__));
+            throw new \Exception("Please define __ROOT__ constant in your public/index.php file");
         }
 
-        if (file_exists(__ROOT__ . "/src/App/Config/routes.php")) {
-            $routes = include __ROOT__ . "/src/App/Config/routes.php";
+        // Set-up db
+        if (!file_exists(__ROOT__ . "/src/Config/database.php")) {
+            throw new \Exception("Please create database.php file in your src/Config directory");
+        }
+
+        $database = include __ROOT__ . "/src/Config/database.php";
+        $this->setDatabase($database);
+
+        // Set routes
+        $this->setRoutes();
+
+        if (file_exists(__ROOT__ . "/src/Config/routes.php")) {
+            $routes = include __ROOT__ . "/src/Config/routes.php";
             $this->setAppRoutes($routes);
-        }
-
-        if (file_exists(__ROOT__ . "/src/App/Config/database.php")) {
-            $database = include __ROOT__ . "/src/App/Config/database.php";
-            $this->setDatabase($database);
         }
     }
 
     public function run(): void
     {
-        $this->setRoutes();
         $this->bootstrap();
         $this->router->dispatch();
     }
