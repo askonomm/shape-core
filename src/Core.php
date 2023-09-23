@@ -3,8 +3,8 @@
 namespace Asko\Shape\Core;
 
 use Asko\Router\Router;
-use Asko\Shape\Shape\Controllers\AdminController;
-use Asko\Shape\Shape\Controllers\SetupController;
+use Asko\Shape\Core\Controllers\AdminController;
+use Asko\Shape\Core\Controllers\SetupController;
 use Illuminate\Database\Capsule\Manager as Database;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
