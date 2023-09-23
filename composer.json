@@ -1,0 +1,25 @@
+{
+    "name": "asko/shape-core",
+    "description": "Core of the Shape CMS",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Asko\\Shape\\Core\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Asko Nõmm",
+            "email": "asko@repl.ee"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "asko/router": "^2.0",
+        "illuminate/database": "^10.24",
+        "illuminate/events": "^10.24",
+        "askonomm/hird": "^1.1",
+        "symfony/http-foundation": "^6.3"
+    }
+}
