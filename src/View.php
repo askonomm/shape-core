@@ -25,6 +25,6 @@ class View
             $templateLocation = $this->rootDir . "/" . $template;
         }
 
-        $this->latte->render($templateLocation, $params);
+        $this->latte->render($templateLocation . ".latte", $params);
     }
 }
