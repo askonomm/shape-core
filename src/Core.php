@@ -41,6 +41,10 @@ class Core
             throw new \Exception("Please define __ROOT__ constant in your public/index.php file");
         }
 
+        // Setup dotenv
+        $dotenv = \Dotenv\Dotenv::createImmutable(__ROOT__);
+        $dotenv->load();
+
         // Set-up db
         if (!file_exists(__ROOT__ . "/src/Config/database.php")) {
             throw new \Exception("Please create database.php file in your src/Config directory");
