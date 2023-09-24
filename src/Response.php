@@ -35,9 +35,17 @@ class Response
     public function view(string $template, array $params = [], int $status = 200, array $headers = []): Response
     {
         $view = new View();
-        $view->render($template, $params);
+        $content = $view->render($template, $params);
 
-        return $this;
+        return $this->make($content, $status, $headers);
+    }
+
+    public function viewCore(string $template, array $params = [], int $status = 200, array $headers = []): Response
+    {
+        $view = new View(__DIR__ . "/Views");
+        $content = $view->render($template, $params);
+
+        return $this->make($content, $status, $headers);
     }
 
     public function json(array $data = [], int $status = 200, array $headers = []): Response

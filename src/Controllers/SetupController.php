@@ -3,11 +3,12 @@
 namespace Asko\Shape\Core\Controllers;
 
 use Asko\Shape\Core\Request;
+use Asko\Shape\Core\Response;
 
 class SetupController
 {
-    public function index(Request $request): void
+    public function index(Request $request, Response $response): Response
     {
-        echo "Setup index";
+        return $response->viewCore("setup/index");
     }
 }

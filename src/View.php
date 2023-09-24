@@ -13,10 +13,10 @@ class View
         $this->latte = new Engine();
     }
 
-    public function render(string $template, array $params = []): void
+    public function render(string $template, array $params = []): string
     {
         if (!defined("__ROOT__")) {
-            throw new \Exception("Please define __ROOT__ constant in your public/index.php file");
+            define("__ROOT__", __DIR__);
         }
 
         $templateLocation = __ROOT__ . "/src/Views/" . $template;
@@ -25,6 +25,10 @@ class View
             $templateLocation = $this->rootDir . "/" . $template;
         }
 
-        $this->latte->render($templateLocation . ".latte", $params);
+        try {
+            return $this->latte->renderToString($templateLocation . ".latte", $params);
+        } catch (\Exception) {
+            return "";
+        }
     }
 }
