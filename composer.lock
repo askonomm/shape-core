@@ -4,20 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c9722b3403741b08c5ff98c4c700202",
+    "content-hash": "f38faf5a43d219833110ed050745ff61",
     "packages": [
         {
-            "name": "asko/router",
-            "version": "v2.0",
+            "name": "asko/hird",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/askonomm/router.git",
-                "reference": "31daaef3452b8437cf2d9c04067109a2dfe0422d"
+                "url": "https://github.com/askonomm/hird.git",
+                "reference": "ef1dd318d437bb33adddf226c546e85f4744ce8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/askonomm/router/zipball/31daaef3452b8437cf2d9c04067109a2dfe0422d",
-                "reference": "31daaef3452b8437cf2d9c04067109a2dfe0422d",
+                "url": "https://api.github.com/repos/askonomm/hird/zipball/ef1dd318d437bb33adddf226c546e85f4744ce8c",
+                "reference": "ef1dd318d437bb33adddf226c546e85f4744ce8c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.21"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Asko\\Hird\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asko Nomm",
+                    "email": "asko@asko.dev",
+                    "homepage": "https://asko.dev"
+                }
+            ],
+            "description": "An extensible validation library for your data with sane defaults.",
+            "support": {
+                "issues": "https://github.com/askonomm/hird/issues",
+                "source": "https://github.com/askonomm/hird/tree/v1.1.2"
+            },
+            "time": "2023-09-24T22:35:47+00:00"
+        },
+        {
+            "name": "asko/router",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/askonomm/router.git",
+                "reference": "71b3f9f284f6997f00505a3784129de11db81807"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/askonomm/router/zipball/71b3f9f284f6997f00505a3784129de11db81807",
+                "reference": "71b3f9f284f6997f00505a3784129de11db81807",
                 "shasum": ""
             },
             "require": {
@@ -45,53 +89,9 @@
             "description": "A minimal PHP router with configuration-free dependency injection",
             "support": {
                 "issues": "https://github.com/askonomm/router/issues",
-                "source": "https://github.com/askonomm/router/tree/v2.0"
+                "source": "https://github.com/askonomm/router/tree/v2.0.1"
             },
-            "time": "2023-09-17T12:54:09+00:00"
-        },
-        {
-            "name": "askonomm/hird",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/askonomm/hird.git",
-                "reference": "d2a1290423e1102b23fc8e042cef5420a42c02af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/askonomm/hird/zipball/d2a1290423e1102b23fc8e042cef5420a42c02af",
-                "reference": "d2a1290423e1102b23fc8e042cef5420a42c02af",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "pestphp/pest": "^1.21"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Askonomm\\Hird\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Asko Nomm",
-                    "email": "asko@bien.ee",
-                    "homepage": "https://bien.ee"
-                }
-            ],
-            "description": "An extensible validation library for your data with sane defaults.",
-            "support": {
-                "issues": "https://github.com/askonomm/hird/issues",
-                "source": "https://github.com/askonomm/hird/tree/v1.1.1"
-            },
-            "time": "2022-03-06T21:49:33+00:00"
+            "time": "2023-09-21T16:40:35+00:00"
         },
         {
             "name": "brick/math",
