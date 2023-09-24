@@ -28,6 +28,7 @@ class Core
         $this->router->get("/admin", [AdminController::class, "index"]);
         $this->router->get("/admin/login", [AdminController::class, "login"]);
         $this->router->get("/admin/setup", [SetupController::class, "index"]);
+        $this->router->post("/admin/setup", [SetupController::class, "setup"]);
     }
 
     private function setAppRoutes($routes): void
