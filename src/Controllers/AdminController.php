@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core\Controllers;
 
-use Askonomm\Hird\Hird as Validator;
+use Asko\Hird\Hird as Validator;
 use Asko\Shape\Core\Models\User;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
