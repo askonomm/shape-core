@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core\Controllers;
 
-use Asko\Hird\Hird as Validator;
+use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
 
@@ -22,8 +22,6 @@ class SetupController
             "password" => "required",
             "password_again" => "required|same:password",
         ]);
-
-        //$validator->registerValidator("same", (new SameValidator));
 
         if ($validator->fails()) {
             var_dump($validator->errors());
