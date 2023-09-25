@@ -6,8 +6,10 @@ use Asko\Hird\Validators\Validator;
 
 class SameValidator implements Validator
 {
-    public function __construct(private array $fields)
-    {
+    public function __construct(
+        private array $fields,
+        private array $fieldNames,
+    ) {
     }
 
     public function validate(string $field, mixed $value, mixed $modifier = null): bool
@@ -17,6 +19,6 @@ class SameValidator implements Validator
 
     public function composeError(string $field, mixed $modifier = null): string
     {
-        return "{$field} is not equal to {$modifier}.";
+        return "{$this->fieldNames[$field]} is not equal to {$modifier}.";
     }
 }

@@ -7,11 +7,18 @@ use Asko\Shape\Core\Validators\SameValidator;
 
 class Validator extends Hird
 {
+    private array $fieldNames = [
+        'email' => 'E-mail',
+        'name' => 'Name',
+        'password' => 'Password',
+        'password_again' => 'Repeated password',
+    ];
+
     public function __construct(
         private array $fields,
         private array $rules,
     ) {
-        parent::__construct($fields, $rules);
+        parent::__construct($fields, $rules, $this->fieldNames);
 
         // Register validators
         $this->registerValidator("same", SameValidator::class);
