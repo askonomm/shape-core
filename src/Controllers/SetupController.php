@@ -24,10 +24,12 @@ class SetupController
         ]);
 
         if ($validator->fails()) {
-            var_dump($validator->errors());
-            exit;
+            return $response->viewCore("setup/index", [
+                'email' => $request->post('email'),
+                'errors' => $validator->errors()
+            ]);
         }
 
-        return $response->make("");
+        return $response->viewCore("setup/success");
     }
 }

@@ -14,15 +14,12 @@
             "email": "asko@repl.ee"
         }
     ],
-    "scripts": {
-        "post-update-cmd": ["npm install", "npm run build-css"]
-    },
     "require": {
         "php": ">=8.2",
         "asko/router": "^2.0",
         "illuminate/database": "^10.24",
         "illuminate/events": "^10.24",
-        "asko/hird": "^1.1.2",
+        "asko/hird": "^1.2.0",
         "symfony/http-foundation": "^6.3",
         "latte/latte": "^3.0",
         "vlucas/phpdotenv": "^5.5"

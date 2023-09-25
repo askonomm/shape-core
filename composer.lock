@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f38faf5a43d219833110ed050745ff61",
+    "content-hash": "45e3ed19037bcd653f128374e4c44ff2",
     "packages": [
         {
             "name": "asko/hird",
-            "version": "v1.1.2",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/askonomm/hird.git",
-                "reference": "ef1dd318d437bb33adddf226c546e85f4744ce8c"
+                "reference": "57518b03cbf19b8a714d6fcb573f71cb921005e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/askonomm/hird/zipball/ef1dd318d437bb33adddf226c546e85f4744ce8c",
-                "reference": "ef1dd318d437bb33adddf226c546e85f4744ce8c",
+                "url": "https://api.github.com/repos/askonomm/hird/zipball/57518b03cbf19b8a714d6fcb573f71cb921005e3",
+                "reference": "57518b03cbf19b8a714d6fcb573f71cb921005e3",
                 "shasum": ""
             },
             "require": {
@@ -46,9 +46,9 @@
             "description": "An extensible validation library for your data with sane defaults.",
             "support": {
                 "issues": "https://github.com/askonomm/hird/issues",
-                "source": "https://github.com/askonomm/hird/tree/v1.1.2"
+                "source": "https://github.com/askonomm/hird/tree/v1.2.0"
             },
-            "time": "2023-09-24T22:35:47+00:00"
+            "time": "2023-09-25T14:29:52+00:00"
         },
         {
             "name": "asko/router",
@@ -930,16 +930,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.70.0",
+            "version": "2.71.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "d3298b38ea8612e5f77d38d1a99438e42f70341d"
+                "reference": "98276233188583f2ff845a0f992a235472d9466a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/d3298b38ea8612e5f77d38d1a99438e42f70341d",
-                "reference": "d3298b38ea8612e5f77d38d1a99438e42f70341d",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/98276233188583f2ff845a0f992a235472d9466a",
+                "reference": "98276233188583f2ff845a0f992a235472d9466a",
                 "shasum": ""
             },
             "require": {
@@ -1032,7 +1032,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-09-07T16:43:50+00:00"
+            "time": "2023-09-25T11:31:05+00:00"
         },
         {
             "name": "phpoption/phpoption",
