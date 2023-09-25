@@ -18,7 +18,10 @@ class Validator extends Hird
         private array $fields,
         private array $rules,
     ) {
-        parent::__construct($fields, $rules, $this->fieldNames);
+        parent::__construct($fields, $rules);
+
+        // Set field names
+        $this->setFieldNames($this->fieldNames);
 
         // Register validators
         $this->registerValidator("same", SameValidator::class);

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45e3ed19037bcd653f128374e4c44ff2",
+    "content-hash": "a1d2bd8f06a054e0c5d6c1999d9d283c",
     "packages": [
         {
             "name": "asko/hird",
-            "version": "v1.2.0",
+            "version": "v2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/askonomm/hird.git",
-                "reference": "57518b03cbf19b8a714d6fcb573f71cb921005e3"
+                "reference": "641826a5a408b00a6adb04847d178925bbe0e574"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/askonomm/hird/zipball/57518b03cbf19b8a714d6fcb573f71cb921005e3",
-                "reference": "57518b03cbf19b8a714d6fcb573f71cb921005e3",
+                "url": "https://api.github.com/repos/askonomm/hird/zipball/641826a5a408b00a6adb04847d178925bbe0e574",
+                "reference": "641826a5a408b00a6adb04847d178925bbe0e574",
                 "shasum": ""
             },
             "require": {
@@ -46,9 +46,9 @@
             "description": "An extensible validation library for your data with sane defaults.",
             "support": {
                 "issues": "https://github.com/askonomm/hird/issues",
-                "source": "https://github.com/askonomm/hird/tree/v1.2.0"
+                "source": "https://github.com/askonomm/hird/tree/v2.0"
             },
-            "time": "2023-09-25T14:29:52+00:00"
+            "time": "2023-09-25T17:46:58+00:00"
         },
         {
             "name": "asko/router",
