@@ -63,13 +63,17 @@ class SetupController
         }
 
         // Create user
+        $auth_token = bin2hex(random_bytes(32));
         $user = new User();
         $user->email = $this->request->post('email');
         $user->name = $this->request->post('name');
         $user->password = password_hash($this->request->post('password'), PASSWORD_DEFAULT);
+        $user->auth_token = $auth_token;
         $user->save();
 
         // Log in
-        return $this->response->redirect("/admin/login");
+        $this->request->session()->set("auth_token", $auth_token);
+
+        return $this->response->redirect("/admin");
     }
 }
