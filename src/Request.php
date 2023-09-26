@@ -65,6 +65,11 @@ class Request
         return $this->request->cookies->all();
     }
 
+    public function session(): mixed
+    {
+        return new Session();
+    }
+
     public function header(string $key = null): mixed
     {
         if ($key) {

@@ -14,6 +14,8 @@
       method="post"
       class="p-8 bg-white border border-slate-400 w-[400px] rounded-md shadow"
     >
+      <input type="hidden" name="csrf_token" value="{$csrf_token}" />
+
       {if $errors}
         <ul class="block mb-6 text-red-500">
           <h3 class="text-xs uppercase font-semibold mb-2">Errors</h3>

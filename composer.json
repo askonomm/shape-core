@@ -19,7 +19,7 @@
         "asko/router": "^2.0",
         "illuminate/database": "^10.24",
         "illuminate/events": "^10.24",
-        "asko/hird": "^2.0",
+        "asko/hird": "^2.1",
         "symfony/http-foundation": "^6.3",
         "latte/latte": "^3.0",
         "vlucas/phpdotenv": "^5.5"

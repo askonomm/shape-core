@@ -31,13 +31,16 @@ class Core
         $this->router->post("/admin/setup", [SetupController::class, "setup"]);
     }
 
-    private function setAppRoutes($routes): void
+    private function setAppRoutes(callable $routes): void
     {
         $routes($this->router);
     }
 
     private function bootstrap(): void
     {
+        session_start();
+        //(new \Symfony\Component\HttpFoundation\Request)->setSession();
+
         if (!defined("__ROOT__")) {
             throw new \Exception("Please define __ROOT__ constant in your public/index.php file");
         }
