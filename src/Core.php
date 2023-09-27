@@ -6,6 +6,7 @@ use Asko\Router\Router;
 use Asko\Shape\Core\Controllers\AdminController;
 use Asko\Shape\Core\Controllers\LoginController;
 use Asko\Shape\Core\Controllers\SetupController;
+use Asko\Shape\Core\Controllers\ContentController;
 use Illuminate\Database\Capsule\Manager as Database;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
@@ -31,6 +32,7 @@ class Core
         $this->router->post("/admin/login", [LoginController::class, "login"]);
         $this->router->get("/admin/setup", [SetupController::class, "index"]);
         $this->router->post("/admin/setup", [SetupController::class, "setup"]);
+        $this->router->get("/admin/content/{content_type}", [ContentController::class, "index"]);
     }
 
     private function setAppRoutes(callable $routes): void

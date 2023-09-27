@@ -64,7 +64,7 @@ class LoginController
             $csrf_token = bin2hex(random_bytes(32));
             $this->request->session()->set("csrf_token", $csrf_token);
 
-            return $this->response->viewCore("setup/index", [
+            return $this->response->viewCore("login/index", [
                 "email" => $this->request->post('email'),
                 "errors" => $validator->errors(),
                 "csrf_token" => $csrf_token,

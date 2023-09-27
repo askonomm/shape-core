@@ -6,6 +6,7 @@ use Asko\Shape\Core\Models\User;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
 use Asko\Shape\Core\ContentTypes;
+use Asko\Shape\Core\Services\AuthService;
 
 /**
  * The Admin controller is responsible for directing the user to 
@@ -28,8 +29,12 @@ class AdminController
         }
 
         // Are we logged out?
-        // TODO: Make sure auth token matches one in DB
         if (!$request->session()->get("auth_token")) {
+            return $response->redirect("/admin/login");
+        }
+
+        // Are we logged in, but not authenticated?
+        if (!AuthService::isAuthenticated($request->session()->get("auth_token"))) {
             return $response->redirect("/admin/login");
         }
 
