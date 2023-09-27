@@ -72,6 +72,8 @@ class LoginController
         }
 
         // Log the user in
-        return $this->response->redirect("/admin/content/{$content_types->first()->getSlug()}");
+        $identifier = $content_types->first()->getIdentifier();
+
+        return $this->response->redirect("/admin/content/{$identifier}");
     }
 }

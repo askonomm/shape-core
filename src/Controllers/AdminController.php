@@ -35,6 +35,8 @@ class AdminController
 
         // If we make it this far, that means all is good, 
         // and we can direct the user to the first content type.
-        return $response->redirect("/admin/content/{$content_types->first()->getSlug()}");
+        $identifier = $content_types->first()->getIdentifier();
+
+        return $response->redirect("/admin/content/{$identifier}");
     }
 }

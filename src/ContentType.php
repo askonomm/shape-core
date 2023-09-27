@@ -4,13 +4,25 @@ namespace Asko\Shape\Core;
 
 readonly class ContentType
 {
+    /**
+     * @param string $identifier
+     * @param string $name
+     * @param string $singular_name
+     * @param string $description
+     * @param ContentFieldInterface[] $fields
+     */
     public function __construct(
+        private string $identifier,
         private string $name,
         private string $singular_name,
-        private string $slug,
         private string $description,
         private array $fields,
     ) {
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
     }
 
     public function getName(): string
@@ -21,11 +33,6 @@ readonly class ContentType
     public function getSingularName(): string
     {
         return $this->singular_name;
-    }
-
-    public function getSlug(): string
-    {
-        return $this->slug;
     }
 
     public function getDescription(): string

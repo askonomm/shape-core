@@ -9,6 +9,8 @@ readonly class TextField extends ContentField
     public function __construct(
         string $identifier,
         string $name,
+        private ?string $prefix = null,
+        private ?string $suffix = null,
     ) {
         parent::__construct(
             identifier: $identifier,

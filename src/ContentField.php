@@ -6,10 +6,13 @@ use Asko\Shape\Core\Interfaces\ContentFieldInterface;
 
 readonly class ContentField implements ContentFieldInterface
 {
+    /**
+     * @param string $identifier
+     * @param string $name
+     */
     public function __construct(
         private string $identifier,
         private string $name,
-
     ) {
     }
 
