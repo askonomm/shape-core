@@ -9,8 +9,10 @@ use Asko\Shape\Core\Response;
 
 class AdminController
 {
-    public function __construct(private User $user, private Response $response)
-    {
+    public function __construct(
+        private User $user,
+        private Response $response,
+    ) {
         // Are we set up?
         if (!$this->user->find(1)) {
             $this->response->redirect("/admin/setup");

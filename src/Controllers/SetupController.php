@@ -24,21 +24,32 @@ class SetupController
         if ($this->user->find(1)) {
             $this->response->redirect("/admin/login");
         }
-
-        // Set CSRF token
-        $this->request->session()->set("csrf_token", bin2hex(random_bytes(32)));
     }
 
+    /**
+     * The index method is responsible for rendering the setup form.
+     *
+     * @return Response
+     */
     public function index(): Response
     {
+        // Set CSRF token
+        $csrf_token = bin2hex(random_bytes(32));
+        $this->request->session()->set("csrf_token", $csrf_token);
+
         return $this->response->viewCore("setup/index", [
             "email" => "",
             "name" => "",
             "errors" => [],
-            "csrf_token" => $this->request->session()->get("csrf_token"),
+            "csrf_token" => $csrf_token,
         ]);
     }
 
+    /**
+     * The setup method is responsible for creating the first user.
+     *
+     * @return Response
+     */
     public function setup(): Response
     {
         $validator = new Validator($this->request->post(), [
@@ -49,31 +60,31 @@ class SetupController
         ]);
 
         // Validate CSRF
-        if ($this->request->post("csrf") !== $this->request->session()->get("csrf_token")) {
+        if ($this->request->post("csrf_token") !== $this->request->session()->get("csrf_token")) {
             $validator->addError("CSRF token is invalid.");
         }
 
         // Validate form
         if ($validator->fails()) {
+            $csrf_token = bin2hex(random_bytes(32));
+            $this->request->session()->set("csrf_token", $csrf_token);
+
             return $this->response->viewCore("setup/index", [
                 "email" => $this->request->post('email'),
                 "name" => $this->request->post('name'),
                 "errors" => $validator->errors(),
+                "csrf_token" => $csrf_token,
             ]);
         }
 
         // Create user
-        $auth_token = bin2hex(random_bytes(32));
         $user = new User();
         $user->email = $this->request->post('email');
         $user->name = $this->request->post('name');
         $user->password = password_hash($this->request->post('password'), PASSWORD_DEFAULT);
-        $user->auth_token = $auth_token;
         $user->save();
 
         // Log in
-        $this->request->session()->set("auth_token", $auth_token);
-
-        return $this->response->redirect("/admin");
+        return $this->response->redirect("/admin/login");
     }
 }
