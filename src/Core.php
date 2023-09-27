@@ -4,6 +4,7 @@ namespace Asko\Shape\Core;
 
 use Asko\Router\Router;
 use Asko\Shape\Core\Controllers\AdminController;
+use Asko\Shape\Core\Controllers\LoginController;
 use Asko\Shape\Core\Controllers\SetupController;
 use Illuminate\Database\Capsule\Manager as Database;
 use Illuminate\Events\Dispatcher;
@@ -26,7 +27,8 @@ class Core
     {
         $this->router = new Router();
         $this->router->get("/admin", [AdminController::class, "index"]);
-        $this->router->get("/admin/login", [AdminController::class, "login"]);
+        $this->router->get("/admin/login", [LoginController::class, "index"]);
+        $this->router->post("/admin/login", [LoginController::class, "login"]);
         $this->router->get("/admin/setup", [SetupController::class, "index"]);
         $this->router->post("/admin/setup", [SetupController::class, "setup"]);
     }

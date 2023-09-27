@@ -2,47 +2,39 @@
 
 namespace Asko\Shape\Core\Controllers;
 
-use Asko\Hird\Hird as Validator;
 use Asko\Shape\Core\Models\User;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
+use Asko\Shape\Core\ContentTypes;
 
+/**
+ * The Admin controller is responsible for directing the user to 
+ * the correct place depending on a variety of factors such as 
+ * if the site is set up, if the user is logged in, etc.
+ * 
+ * @author Asko Nõmm <asko@asko.dev>
+ */
 class AdminController
 {
-    public function __construct(
-        private User $user,
-        private Response $response,
-    ) {
+    public function index(
+        User $user,
+        Request $request,
+        Response $response,
+        ContentTypes $content_types,
+    ): Response {
         // Are we set up?
-        if (!$this->user->find(1)) {
-            $this->response->redirect("/admin/setup");
-        }
-    }
-
-    public function index(Response $response): Response
-    {
-        return $response->make("Admin index");
-    }
-
-    public function login(Request $request): void
-    {
-        if ($request->method() === "POST") {
-            $validator = new Validator($request->post(), [
-                "email" => "required|email",
-                "password" => "required",
-            ]);
-
-            if ($validator->fails()) {
-                var_dump($validator->errors());
-                exit;
-            }
-
-            // $this->user->create([
-            //     "username" => $request->post("username"),
-            //     "password" => password_hash($request->post("password"), PASSWORD_DEFAULT),
-            // ]);
+        if (!$user->find(1)) {
+            return $response->redirect("/admin/setup");
         }
 
-        echo "Admin login";
+        // Are we logged out?
+        // TODO: Make sure auth token matches one in DB
+        if (!$request->session()->get("auth_token")) {
+            return $response->redirect("/admin/login");
+        }
+
+        // If we make it this far, that means all is good, 
+        // and we can direct the user to the first content type.
+        return $response->redirect("/admin/content/{$content_types->first()->getSlug()}");
     }
 }

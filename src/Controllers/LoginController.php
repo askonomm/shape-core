@@ -6,14 +6,12 @@ use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
 use Asko\Shape\Core\Models\User;
+use Asko\Shape\Core\ContentTypes;
 
-/**
- * Setup controller is responsible for setting up the application 
- * by creating the first user.
- * 
+/** 
  * @author Asko Nõmm <asko@asko.dev>
  */
-class SetupController
+class LoginController
 {
     public function __construct(
         private User $user,
@@ -21,13 +19,13 @@ class SetupController
         private Response $response,
     ) {
         // Are we set up?
-        if ($this->user->find(1)) {
-            $this->response->redirect("/admin/login");
+        if (!$this->user->find(1)) {
+            $this->response->redirect("/admin/setup");
         }
     }
 
     /**
-     * The index method is responsible for rendering the setup form.
+     * The index method is responsible for rendering the login form.
      *
      * @return Response
      */
@@ -37,26 +35,23 @@ class SetupController
         $csrf_token = bin2hex(random_bytes(32));
         $this->request->session()->set("csrf_token", $csrf_token);
 
-        return $this->response->viewCore("setup/index", [
+        return $this->response->viewCore("login/index", [
             "email" => "",
-            "name" => "",
             "errors" => [],
             "csrf_token" => $csrf_token,
         ]);
     }
 
     /**
-     * The setup method is responsible for creating the first user.
+     * The login method is responsible for logging the user in.
      *
      * @return Response
      */
-    public function setup(): Response
+    public function login(ContentTypes $content_types): Response
     {
         $validator = new Validator($this->request->post(), [
             "email" => "required|email",
-            "name" => "required",
             "password" => "required",
-            "password_again" => "required|same:password",
         ]);
 
         // Validate CSRF
@@ -71,24 +66,12 @@ class SetupController
 
             return $this->response->viewCore("setup/index", [
                 "email" => $this->request->post('email'),
-                "name" => $this->request->post('name'),
                 "errors" => $validator->errors(),
                 "csrf_token" => $csrf_token,
             ]);
         }
 
-        // Create user
-        $auth_token = bin2hex(random_bytes(32));
-        $user = new User();
-        $user->email = $this->request->post('email');
-        $user->name = $this->request->post('name');
-        $user->password = password_hash($this->request->post('password'), PASSWORD_DEFAULT);
-        $user->auth_token = $auth_token;
-        $user->save();
-
-        // Log in
-        $this->request->session()->set("auth_token", $auth_token);
-
-        return $this->response->redirect("/admin");
+        // Log the user in
+        return $this->response->redirect("/admin/content/{$content_types->first()->getSlug()}");
     }
 }
