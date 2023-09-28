@@ -23,7 +23,7 @@ class ContentTypes
     public function get(string $slug): ?ContentType
     {
         foreach ($this->content_types as $content_type) {
-            if ($content_type->getSlug() === $slug) {
+            if ($content_type->getIdentifier() === $slug) {
                 return $content_type;
             }
         }

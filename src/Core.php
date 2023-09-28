@@ -43,7 +43,6 @@ class Core
     private function bootstrap(): void
     {
         session_start();
-        //(new \Symfony\Component\HttpFoundation\Request)->setSession();
 
         if (!defined("__ROOT__")) {
             throw new \Exception("Please define __ROOT__ constant in your public/index.php file");
@@ -60,6 +59,14 @@ class Core
 
         $database = include __ROOT__ . "/src/Config/database.php";
         $this->setDatabase($database);
+
+        if (file_exists(__DIR__ . "/Config/migrations.php")) {
+            $migrations = include __DIR__ . "/Config/migrations.php";
+
+            foreach ($migrations as $migration) {
+                new $migration();
+            }
+        }
 
         // Set routes
         $this->setRoutes();
