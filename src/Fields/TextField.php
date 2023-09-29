@@ -7,8 +7,9 @@ use Asko\Shape\Core\ContentField;
 readonly class TextField extends ContentField
 {
     public function __construct(
-        string $identifier,
-        string $name,
+        private string $identifier,
+        private string $name,
+        private ?string $placeholder = null,
         private ?string $prefix = null,
         private ?string $suffix = null,
     ) {
@@ -21,7 +22,17 @@ readonly class TextField extends ContentField
     public function getEditable(): callable
     {
         return function (string $content_id, string $value): string {
-            return $value;
+            $latte = new \Latte\Engine();
+
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/text.latte", [
+                "content_id" => $content_id,
+                "prefix" => $this->prefix,
+                "suffix" => $this->suffix,
+                "identifier" => $this->getIdentifier(),
+                "placeholder" => $this->placeholder,
+                "name" => $this->getName(),
+                "value" => $value,
+            ]);
         };
     }
 

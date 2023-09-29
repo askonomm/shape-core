@@ -1,0 +1,17 @@
+{layout "../_layouts/admin.latte"}
+
+{block "title"}{$content_type->getName()}{/block}
+{block "page_title"}Edit {$content_type->getSingularName()}{/block}
+
+{block "content"}
+
+<div class="w-full">
+    {foreach $fields as $field}
+        <label class="block mb-6">
+            <div class="mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</div>
+            <div class="field">{$field['editable']|noescape}</div>
+        </label>
+    {/foreach}
+</div>
+
+{/block}

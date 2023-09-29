@@ -13,6 +13,7 @@ class ContentMigration
         if (!$schema->hasTable("content")) {
             $schema->create("content", function ($table) {
                 $table->increments("id");
+                $table->string("identifier");
                 $table->timestamps();
             });
         }

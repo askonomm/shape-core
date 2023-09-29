@@ -33,6 +33,8 @@ class Core
         $this->router->get("/admin/setup", [SetupController::class, "index"]);
         $this->router->post("/admin/setup", [SetupController::class, "setup"]);
         $this->router->get("/admin/content/{content_type}", [ContentController::class, "index"]);
+        $this->router->get("/admin/content/{content_type}/add", [ContentController::class, "add"]);
+        $this->router->get("/admin/content/{content_type}/edit/{content_id}", [ContentController::class, "edit"]);
     }
 
     private function setAppRoutes(callable $routes): void

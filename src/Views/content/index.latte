@@ -1,5 +1,17 @@
-<h2>{$content_type->getName()}</h2>
+{layout "../_layouts/admin.latte"}
 
-<a href="/admin/content/{$content_type->getIdentifier()}/add">
-    Add new {$content_type->getSingularName()}
-</a>
+{block "title"}{$content_type->getName()}{/block}
+{block "page_title"}{$content_type->getName()}{/block}
+{block "action"}
+<a href="/admin/content/{$content_type->getIdentifier()}/add" class="action-button">Add new {$content_type->getSingularName()}</a>
+{/block}
+
+{block "content"}
+
+{foreach $content_items as $item}
+    <li>
+        <a href="/admin/content/{$content_type->getIdentifier()}/edit/{$item->id}">{$item->id}</a>
+    </li>
+{/foreach}
+
+{/block}
