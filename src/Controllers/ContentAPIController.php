@@ -23,7 +23,10 @@ class ContentAPIController
     {
         $field_identifier = array_key_first($this->request->post());
         $field_value = $this->request->post($field_identifier);
-        $field = $this->content_field->where("identifier", $field_identifier)->first();
+        $field = $this->content_field
+            ->where("content_id", $content_id)
+            ->where("identifier", $field_identifier)
+            ->first();
 
         if ($field) {
             $field->value = $field_value;

@@ -63,7 +63,11 @@ class ContentController
 
         foreach ($this->content_types->get($content_type)->getFields() as $field) {
             $field_id = $field->getIdentifier();
-            $field_value = $this->content_field->where("identifier", $field_id)->first()?->value ?? "";
+            $field_value = $this->content_field
+                ->where("content_id", $content_id)
+                ->where("identifier", $field_id)
+                ->first()?->value ?? "";
+
             $fields[] = [
                 'identifier' => $field->getIdentifier(),
                 'name' => $field->getName(),

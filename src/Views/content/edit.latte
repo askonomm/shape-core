@@ -1,3 +1,6 @@
+{varType Asko\Shape\Core\ContentType $content_type}
+{varType array $fields}
+
 {layout "../_layouts/admin.latte"}
 
 {block "title"}{$content_type->getName()}{/block}
@@ -8,8 +11,8 @@
 <div class="w-full">
     {foreach $fields as $field}
         <label class="block mb-6 {last}mb-0{/last}">
-            <div class="mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</div>
-            <div class="field">{$field['editable']|noescape}</div>
+            <span class="block mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</span>
+            <span class="block field">{$field['editable']|noescape}</span>
         </label>
     {/foreach}
 </div>
