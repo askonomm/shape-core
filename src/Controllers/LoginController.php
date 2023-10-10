@@ -11,11 +11,11 @@ use Asko\Shape\Core\ContentTypes;
 /** 
  * @author Asko Nõmm <asko@asko.dev>
  */
-class LoginController
+readonly class LoginController
 {
     public function __construct(
-        private User $user,
-        private Request $request,
+        private User     $user,
+        private Request  $request,
         private Response $response,
     ) {
         // Are we set up?
@@ -45,7 +45,9 @@ class LoginController
     /**
      * The login method is responsible for logging the user in.
      *
+     * @param ContentTypes $content_types
      * @return Response
+     * @throws \Exception
      */
     public function login(ContentTypes $content_types): Response
     {

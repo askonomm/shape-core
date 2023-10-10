@@ -5,7 +5,16 @@
     </div>
     {/if}
 
-    <input class="input {if $prefix}rounded-l-none{/if} {if $suffix}rounded-r-none{/if}" type="text" name="{$identifier}" value="{$value}" placeholder={$placeholder} />
+    <input
+        class="input {if $prefix}rounded-l-none{/if} {if $suffix}rounded-r-none{/if}"
+        type="text"
+        name="{$identifier}"
+        value="{$value}"
+        placeholder="{$placeholder}"
+        hx-post="/admin/api/content/{$content_id}/update-field"
+        hx-trigger="input changed delay:250ms"
+        hx-swap="none"
+    />
 
     {if $suffix}
     <div class="px-2 py-1.5 bg-slate-100 border-y border-r border-slate-300 text-sm rounded-r-lg">

@@ -3,11 +3,14 @@
 namespace Asko\Shape\Core\Services;
 
 use Asko\Shape\Core\Models\User;
+use Asko\Shape\Core\Request;
 
 class AuthService
 {
-    public static function isAuthenticated(string $auth_token): bool
+    public static function isAuthenticated(): bool
     {
+        $auth_token = (new Request())->session()->get("auth_token");
+        
         return User::where("auth_token", $auth_token)->exists();
     }
 

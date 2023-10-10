@@ -94,6 +94,20 @@ class Core
     }
 
     /**
+     * @return string
+     */
+    public static function version(): string
+    {
+        $version = \Composer\InstalledVersions::getPrettyVersion('asko/shape-core');
+
+        if (!$version) {
+            return "";
+        }
+
+        return str_replace("v", "", $version);
+    }
+
+    /**
      * @return void
      * @throws \Exception
      */

@@ -16,6 +16,7 @@ readonly class TextField extends ContentField
         parent::__construct(
             identifier: $identifier,
             name: $name,
+            injectedJs: ["htmx.min"]
         );
     }
 

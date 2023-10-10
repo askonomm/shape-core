@@ -11,6 +11,8 @@ interface ContentFieldInterface
 
     public function getIdentifier(): string;
     public function getName(): string;
+    public function getInjectedCss(): array;
+    public function getInjectedJs(): array;
     public function getEditable(): callable;
     public function getViewable(): callable;
 }

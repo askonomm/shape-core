@@ -34,7 +34,7 @@ class AdminController
         }
 
         // Are we logged in, but not authenticated?
-        if (!AuthService::isAuthenticated($request->session()->get("auth_token"))) {
+        if (!AuthService::isAuthenticated()) {
             return $response->redirect("/admin/login");
         }
 

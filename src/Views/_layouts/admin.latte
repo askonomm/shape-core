@@ -5,14 +5,24 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     <title>{block "title"}{/block} - Shape</title>
     <link rel="stylesheet" href="/style.css" />
+    {default $css_injections = []}
+    {default $js_injections = []}
+
+    {foreach $css_injections as $css}
+        <link rel="stylesheet" href="/css/{$css}.css" />
+    {/foreach}
+
+    {foreach $js_injections as $js}
+        <script src="/js/{$js}.js" type="text/javascript"></script>
+    {/foreach}
 </head>
 <body class="bg-slate-50 w-full min-h-screen flex flex-col items-center">
 
     <div class="w-[850px] flex gap-12 items-start">
 
         <div class="w-[200px] pt-4">
-            <h1 class="text-xs font-semibold px-2 py-0.5 bg-white inline-block border uppercase border-slate-300 rounded-lg shadow-sm mb-6">
-                Shape
+            <h1 class="text-xs font-medium px-2 py-0.5 bg-white inline-block border uppercase border-slate-300 rounded-md shadow-sm mb-6">
+                Shape <span class="text-slate-400">{$shape_version}</span>
             </h1>
 
             <ul>
