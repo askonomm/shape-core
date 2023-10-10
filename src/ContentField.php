@@ -13,6 +13,8 @@ readonly class ContentField implements ContentFieldInterface
     public function __construct(
         private string $identifier,
         private string $name,
+        private array $injectedJs = [],
+        private array $injectedCss = [],
     ) {
     }
 
@@ -24,6 +26,16 @@ readonly class ContentField implements ContentFieldInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getInjectedJs(): array
+    {
+        return $this->injectedJs;
+    }
+
+    public function getInjectedCss(): array
+    {
+        return $this->injectedCss;
     }
 
     public function getEditable(): callable

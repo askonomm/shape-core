@@ -8,17 +8,33 @@ use Asko\Shape\Core\Models\Content;
 use Asko\Shape\Core\Models\ContentField;
 use Asko\Shape\Core\ContentTypes;
 
+/**
+ *
+ */
 class ContentController
 {
     use Guardable;
 
+    /**
+     * @param ContentTypes $content_types
+     * @param Content $content
+     * @param ContentField $content_field
+     * @param Response $response
+     */
     public function __construct(
         private ContentTypes $content_types,
+        private Content $content,
+        private ContentField $content_field,
+        private Response $response,
     ) {
         $this->guard();
     }
 
-    public function index(Content $content, Response $response, string $content_type): Response
+    /**
+     * @param string $content_type
+     * @return Response
+     */
+    public function index(string $content_type): Response
     {
         return $response->viewCore("content/index", [
             "content_type" => $this->content_types->get($content_type),
@@ -27,7 +43,11 @@ class ContentController
         ]);
     }
 
-    public function add(Response $response, string $content_type): Response
+    /**
+     * @param string $content_type
+     * @return Response
+     */
+    public function add(string $content_type): Response
     {
         $content = new Content();
         $content->identifier = $content_type;
@@ -37,23 +57,16 @@ class ContentController
     }
 
     /**
-     * @param Content $content
-     * @param Response $response
      * @param string $content_type
      * @param string $content_id
      * @return Response
      */
-    public function edit(
-        Content $content,
-        ContentField $content_field,
-        Response $response,
-        string $content_type,
-        string $content_id
-    ): Response {
+    public function edit(string $content_type, string $content_id): Response {
         $fields = [];
 
         foreach ($this->content_types->get($content_type)->getFields() as $field) {
-            $field_value = $content_field->where("identifier", $field->getIdentifier())->first()?->value ?? "";
+            $field_id = $field->getIdentifier();
+            $field_value = $content_field->where("identifier", $field_id)->first()?->value ?? "";
             $fields[] = [
                 'identifier' => $field->getIdentifier(),
                 'name' => $field->getName(),

@@ -24,7 +24,7 @@ readonly class TextField extends ContentField
         return function (string $content_id, string $value): string {
             $latte = new \Latte\Engine();
 
-            return $latte->renderToString(__DIR__ . "/../Views/_fields/text.latte", [
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_editable.latte", [
                 "content_id" => $content_id,
                 "prefix" => $this->prefix,
                 "suffix" => $this->suffix,
@@ -39,7 +39,17 @@ readonly class TextField extends ContentField
     public function getViewable(): callable
     {
         return function (string $content_id, string $value): string {
-            return $value;
+            $latte = new \Latte\Engine();
+
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_viewable.latte", [
+                "content_id" => $content_id,
+                "prefix" => $this->prefix,
+                "suffix" => $this->suffix,
+                "identifier" => $this->getIdentifier(),
+                "placeholder" => $this->placeholder,
+                "name" => $this->getName(),
+                "value" => $value,
+            ]);
         };
     }
 }
