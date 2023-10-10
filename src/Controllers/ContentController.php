@@ -17,10 +17,10 @@ class ContentController
     use Guardable;
 
     public function __construct(
-        private ContentTypes $content_types,
-        private Content $content,
-        private ContentField $content_field,
-        private Response $response,
+        private readonly ContentTypes $content_types,
+        private readonly Content $content,
+        private readonly ContentField $content_field,
+        private readonly Response $response,
     ) {
         $this->guard();
     }
@@ -31,10 +31,38 @@ class ContentController
      */
     public function index(string $content_type): Response
     {
+        $content_items = [];
+
+        foreach($this->content->where("identifier", $content_type)->get() as $item) {
+            // Compute fields
+            $fields = [];
+
+            foreach ($this->content_types->get($content_type)->getListViewFields() as $field) {
+                $field_instance = $this->content_types->get($content_type)->getField($field);
+
+                $field_value = $this->content_field
+                    ->where("content_id", $item->id)
+                    ->where("identifier", $field)
+                    ->first()?->value ?? "";
+
+                $fields[] = [
+                    'name' => $field_instance->getName(),
+                    'viewable' => $field_instance->getViewable()($item->id, $field_value),
+                ];
+            }
+
+            // Construct items
+            $content_items[] = [
+                "data" => $item,
+                "fields" => $fields,
+            ];
+        }
+
         return $this->response->viewCore("content/index", [
             "content_type" => $this->content_types->get($content_type),
             "content_types" => $this->content_types->all(),
-            "content_items" => $this->content->where("identifier", $content_type)->get(),
+            "content_items" => $content_items,
+            "total_results" => count($content_items),
             "shape_version" => Core::version(),
         ]);
     }
@@ -45,16 +73,16 @@ class ContentController
      */
     public function add(string $content_type): Response
     {
-        $this->content = new Content();
-        $this->content->identifier = $content_type;
-        $this->content->save();
+        $content = new Content();
+        $content->identifier = $content_type;
+        $content->save();
 
-        return $this->response->redirect("/admin/content/{$content_type}/edit/{$this->content->id}");
+        return $this->response->redirect("/admin/content/{$content_type}/edit/{$content->id}");
     }
 
     /**
      * @param string $content_type
-     * @param string $content_id
+     * @param int $content_id
      * @return Response
      */
     public function edit(string $content_type, int $content_id): Response {

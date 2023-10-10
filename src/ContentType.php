@@ -9,7 +9,8 @@ readonly class ContentType
      * @param string $name
      * @param string $singular_name
      * @param string $description
-     * @param ContentFieldInterface[] $fields
+     * @param ContentField[] $fields
+     * @param string[] $list_view_fields
      */
     public function __construct(
         private string $identifier,
@@ -17,6 +18,7 @@ readonly class ContentType
         private string $singular_name,
         private string $description,
         private array $fields,
+        private array $list_view_fields = [],
     ) {
     }
 
@@ -43,5 +45,21 @@ readonly class ContentType
     public function getFields(): array
     {
         return $this->fields;
+    }
+
+    public function getField(string $identifier): ?ContentField
+    {
+        foreach($this->getFields() as $field) {
+            if ($field->getIdentifier() === $identifier) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
+
+    public function getListViewFields(): array
+    {
+        return $this->list_view_fields;
     }
 }

@@ -8,10 +8,28 @@
 
 {block "content"}
 
-{foreach $content_items as $item}
-    <li>
-        <a href="/admin/content/{$content_type->getIdentifier()}/edit/{$item->id}">{$item->id}</a>
-    </li>
-{/foreach}
+<table class="w-full border-collapse">
+    {foreach $content_items as $item}
+        {first}
+            <tr>
+                {foreach $item["fields"] as $field}
+                    <th class="text-left py-2 text-slate-400 text-xs uppercase font-medium">{$field["name"]}</th>
+                {/foreach}
+            </tr>
+        {/first}
+
+        <tr class="border-b border-slate-200 hover:bg-slate-50">
+            {foreach $item["fields"] as $field}
+                <td>
+                    <a href="/admin/content/{$content_type->getIdentifier()}/edit/{$item["data"]->id}" class="block py-2">
+                        {$field['viewable']|noescape}
+                    </a>
+                </td>
+            {/foreach}
+        </tr>
+    {/foreach}
+</table>
+
+<div class="mt-6 text-sm font-medium text-slate-400">Total of {$total_results} items.</div>
 
 {/block}
