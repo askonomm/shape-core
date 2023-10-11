@@ -10,7 +10,9 @@ readonly class ContentType
      * @param string $singular_name
      * @param string $description
      * @param ContentField[] $fields
-     * @param array $list_view
+     * @param array $list_view_fields
+     * @param string|null $list_view_sort_by
+     * @param string|null $list_view_order
      */
     public function __construct(
         private string $identifier,
@@ -18,7 +20,9 @@ readonly class ContentType
         private string $singular_name,
         private string $description,
         private array $fields,
-        private array $list_view = [],
+        private array $list_view_fields,
+        private ?string $list_view_sort_by = null,
+        private ?string $list_view_order = null,
     ) {
     }
 
@@ -60,11 +64,16 @@ readonly class ContentType
 
     public function getListViewFields(): array
     {
-        return $this->list_view["fields"] ?? [];
+        return $this->list_view_fields;
     }
 
-    public function getListViewSortFn(): ?callable
+    public function getListViewSortBy(): ?string
     {
-        return $this->list_view["sort_fn"] ?? null;
+        return $this->list_view_sort_by;
+    }
+
+    public function getListViewOrder(): ?string
+    {
+        return $this->list_view_order;
     }
 }

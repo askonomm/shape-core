@@ -3,6 +3,7 @@
 namespace Asko\Shape\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $identifier
@@ -13,7 +14,7 @@ class Content extends Model
 {
     protected $table = "content";
 
-    public function fields()
+    public function fields(): HasMany
     {
         return $this->hasMany(ContentField::class);
     }

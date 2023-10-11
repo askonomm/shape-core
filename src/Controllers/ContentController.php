@@ -32,8 +32,43 @@ class ContentController
     public function index(string $content_type): Response
     {
         $content_items = [];
+        $list_view_sort_by =  $this->content_types->get($content_type)->getListViewSortBy();
+        $list_view_order = $this->content_types->get($content_type)->getListViewOrder();
+        $list_view_items = [];
 
-        foreach($this->content->where("identifier", $content_type)->get() as $item) {
+        if (!$list_view_sort_by && !$list_view_order) {
+            $list_view_items = $this->content
+                ->where("identifier", $content_type)
+                ->get();
+        }
+
+        if ($list_view_sort_by && (!$list_view_order || $list_view_order === "desc")) {
+            $list_view_items = $this->content
+                ->where("content.identifier", $content_type)
+                ->leftJoin("content_fields", function($join) use($list_view_sort_by) {
+                    $join
+                        ->on("content.id", "=", "content_fields.content_id")
+                        ->where("content_fields.identifier", $list_view_sort_by);
+                })
+                ->select("content.*", "content_fields.value")
+                ->orderByDesc("content_fields.value")
+                ->get();
+        }
+
+        if ($list_view_sort_by && $list_view_order === "asc") {
+            $list_view_items = $this->content
+                ->where("content.identifier", $content_type)
+                ->leftJoin("content_fields", function($join) use($list_view_sort_by) {
+                    $join
+                        ->on("content.id", "=", "content_fields.content_id")
+                        ->where("content_fields.identifier", $list_view_sort_by);
+                })
+                ->select("content.*", "content_fields.value")
+                ->orderBy("content_fields.value")
+                ->get();
+        }
+
+        foreach($list_view_items as $item) {
             // Compute fields
             $fields = [];
             $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
@@ -64,13 +99,6 @@ class ContentController
                 "fields" => $fields,
                 "list_view_fields" => $computed_list_view_fields,
             ];
-
-            // Sort items
-            $sort_fn = $this->content_types->get($content_type)->getListViewSortFn();
-
-            if ($sort_fn) {
-                usort($content_items, $sort_fn);
-            }
         }
 
         return $this->response->viewCore("content/index", [
