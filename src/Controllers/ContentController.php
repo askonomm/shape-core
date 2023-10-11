@@ -36,26 +36,41 @@ class ContentController
         foreach($this->content->where("identifier", $content_type)->get() as $item) {
             // Compute fields
             $fields = [];
+            $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
 
-            foreach ($this->content_types->get($content_type)->getListViewFields() as $field) {
-                $field_instance = $this->content_types->get($content_type)->getField($field);
-
+            foreach ($this->content_types->get($content_type)->getFields() as $field) {
                 $field_value = $this->content_field
                     ->where("content_id", $item->id)
-                    ->where("identifier", $field)
+                    ->where("identifier", $field->getIdentifier())
                     ->first()?->value ?? "";
 
-                $fields[] = [
-                    'name' => $field_instance->getName(),
-                    'viewable' => $field_instance->getViewable()($item->id, $field_value),
+                $fields[$field->getIdentifier()] = [
+                    'name' => $field->getName(),
+                    'viewable' => $field->getViewable()($item->id, $field_value),
+                    "value" => $field_value,
+                    "visible" => in_array($field->getIdentifier(), $list_view_fields),
                 ];
+            }
+
+            $computed_list_view_fields = [];
+
+            foreach($list_view_fields as $field) {
+                $computed_list_view_fields[] = $fields[$field];
             }
 
             // Construct items
             $content_items[] = [
                 "data" => $item,
                 "fields" => $fields,
+                "list_view_fields" => $computed_list_view_fields,
             ];
+
+            // Sort items
+            $sort_fn = $this->content_types->get($content_type)->getListViewSortFn();
+
+            if ($sort_fn) {
+                usort($content_items, $sort_fn);
+            }
         }
 
         return $this->response->viewCore("content/index", [

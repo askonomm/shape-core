@@ -1,0 +1,12 @@
+<div class="flex place-items-center">
+    <select
+        name="{$identifier}"
+        class="input w-auto"
+        hx-post="/admin/api/content/{$content_id}/update-field"
+        hx-trigger="input changed delay:250ms"
+        hx-swap="none">
+        {foreach $options as $k => $option}
+            <option value="{$k}" {if $value == $k}selected{/if}>{$option}</option>
+        {/foreach}
+    </select>
+</div>

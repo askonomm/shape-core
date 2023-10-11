@@ -5,19 +5,17 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class TextField extends ContentField
+readonly class MarkdownField extends ContentField
 {
     public function __construct(
         string $identifier,
         string $name,
         private ?string $placeholder = null,
-        private ?string $prefix = null,
-        private ?string $suffix = null,
     ) {
         parent::__construct(
             identifier: $identifier,
             name: $name,
-            injectedJs: ["htmx.min"]
+            injectedJs: ["htmx.min", "autoresize", "markdown_upload"]
         );
     }
 
@@ -26,10 +24,8 @@ readonly class TextField extends ContentField
         return function (string $content_id, string $value): string {
             $latte = new Engine();
 
-            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_editable.latte", [
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/markdown_editable.latte", [
                 "content_id" => $content_id,
-                "prefix" => $this->prefix,
-                "suffix" => $this->suffix,
                 "identifier" => $this->getIdentifier(),
                 "placeholder" => $this->placeholder,
                 "name" => $this->getName(),
@@ -43,10 +39,8 @@ readonly class TextField extends ContentField
         return function (string $content_id, string $value): string {
             $latte = new Engine();
 
-            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_viewable.latte", [
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/markdown_viewable.latte", [
                 "content_id" => $content_id,
-                "prefix" => $this->prefix,
-                "suffix" => $this->suffix,
                 "identifier" => $this->getIdentifier(),
                 "placeholder" => $this->placeholder,
                 "name" => $this->getName(),

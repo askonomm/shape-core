@@ -5,14 +5,13 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class TextField extends ContentField
+readonly class SelectField extends ContentField
 {
     public function __construct(
         string $identifier,
         string $name,
-        private ?string $placeholder = null,
-        private ?string $prefix = null,
-        private ?string $suffix = null,
+        private array $options = [],
+        private ?string $defaultValue = null,
     ) {
         parent::__construct(
             identifier: $identifier,
@@ -26,14 +25,12 @@ readonly class TextField extends ContentField
         return function (string $content_id, string $value): string {
             $latte = new Engine();
 
-            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_editable.latte", [
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/select_editable.latte", [
                 "content_id" => $content_id,
-                "prefix" => $this->prefix,
-                "suffix" => $this->suffix,
                 "identifier" => $this->getIdentifier(),
-                "placeholder" => $this->placeholder,
                 "name" => $this->getName(),
-                "value" => $value,
+                "value" => $value === "" ? $this->defaultValue : $value,
+                "options" => $this->options,
             ]);
         };
     }
@@ -43,14 +40,11 @@ readonly class TextField extends ContentField
         return function (string $content_id, string $value): string {
             $latte = new Engine();
 
-            return $latte->renderToString(__DIR__ . "/../Views/_fields/text_viewable.latte", [
+            return $latte->renderToString(__DIR__ . "/../Views/_fields/select_viewable.latte", [
                 "content_id" => $content_id,
-                "prefix" => $this->prefix,
-                "suffix" => $this->suffix,
                 "identifier" => $this->getIdentifier(),
-                "placeholder" => $this->placeholder,
                 "name" => $this->getName(),
-                "value" => $value,
+                "value" => $value === "" ? $this->defaultValue : $value,
             ]);
         };
     }

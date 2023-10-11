@@ -5,6 +5,7 @@ use Asko\Shape\Core\Controllers\ContentController;
 use Asko\Shape\Core\Controllers\ContentAPIController;
 use Asko\Shape\Core\Controllers\LoginController;
 use Asko\Shape\Core\Controllers\SetupController;
+use Asko\Shape\Core\Controllers\UploadAPIController;
 
 return function (\Asko\Router\Router $router) {
     $router->get("/admin", [AdminController::class, "index"]);
@@ -22,4 +23,5 @@ return function (\Asko\Router\Router $router) {
     $router->get("/admin/content/{content_type}/add", [ContentController::class, "add"]);
     $router->get("/admin/content/{content_type}/edit/{content_id}", [ContentController::class, "edit"]);
     $router->post("/admin/api/content/{content_id}/update-field", [ContentAPIController::class, "updateField"]);
+    $router->post("/admin/api/upload-image", [UploadAPIController::class, "uploadImage"]);
 };

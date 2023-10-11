@@ -10,7 +10,7 @@
 
 <div class="w-full">
     {foreach $fields as $field}
-        <label class="block mb-6 {last}mb-0{/last}">
+        <label class="block {if !$iterator->last}mb-6{/if}">
             <span class="block mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</span>
             <span class="block field">{$field['editable']|noescape}</span>
         </label>
