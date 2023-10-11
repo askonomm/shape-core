@@ -1,5 +1,6 @@
 {varType Asko\Shape\Core\ContentType $content_type}
 {varType array $content_items}
+{varType int $total_results}
 
 {layout "../_layouts/admin.latte"}
 
@@ -23,7 +24,7 @@
 
         <tr class="border-b border-slate-200 hover:bg-slate-50">
             {foreach $item["list_view_fields"] as $field}
-                <td class="px-6 text-md">
+                <td class="px-6 text-sm">
                     <a
                         href="/admin/content/{$content_type->getIdentifier()}/edit/{$item["data"]->id}"
                         class="block py-2">
@@ -35,6 +36,6 @@
     {/foreach}
 </table>
 
-<div class="mt-6 text-sm font-medium text-slate-400">Total of {$total_results} items.</div>
+<div class="mt-6 text-xs font-medium text-slate-400">Total of {$total_results} items.</div>
 
 {/block}

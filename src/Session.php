@@ -6,7 +6,7 @@ class Session
 {
     public function get(string $key): mixed
     {
-        return $_SESSION[$key];
+        return $_SESSION[$key] ?? false;
     }
 
     public function set(string $key, mixed $value): void

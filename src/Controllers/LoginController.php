@@ -2,6 +2,7 @@
 
 namespace Asko\Shape\Core\Controllers;
 
+use Asko\Shape\Core\Services\AuthService;
 use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
@@ -28,6 +29,7 @@ readonly class LoginController
      * The index method is responsible for rendering the login form.
      *
      * @return Response
+     * @throws \Exception
      */
     public function index(): Response
     {
@@ -61,6 +63,15 @@ readonly class LoginController
             $validator->addError("CSRF token is invalid.");
         }
 
+        // Validate authentication
+        $email = $this->request->post("email");
+        $password = $this->request->post("password");
+        $token = AuthService::authenticates($email, $password);
+
+        if (!$token) {
+            $validator->addError("Invalid e-mail or password.");
+        }
+
         // Validate form
         if ($validator->fails()) {
             $csrf_token = bin2hex(random_bytes(32));
@@ -74,6 +85,7 @@ readonly class LoginController
         }
 
         // Log the user in
+        $this->request->session()->set("auth_token", $token);
         $identifier = $content_types->first()->getIdentifier();
 
         return $this->response->redirect("/admin/content/{$identifier}");
