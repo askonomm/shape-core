@@ -4,6 +4,7 @@ namespace Asko\Shape\Core\Controllers;
 
 use Asko\Shape\Core\Core;
 use Asko\Shape\Core\Response;
+use Asko\Shape\Core\Services\ContentService;
 use Asko\Shape\Core\Traits\Guardable;
 use Asko\Shape\Core\Models\Content;
 use Asko\Shape\Core\Models\ContentField;
@@ -29,42 +30,31 @@ class ContentController
      * @param string $content_type
      * @return Response
      */
-    public function index(string $content_type): Response
+    public function index(ContentService $content_service, string $content_type): Response
     {
         $content_items = [];
         $list_view_sort_by =  $this->content_types->get($content_type)->getListViewSortBy();
         $list_view_order = $this->content_types->get($content_type)->getListViewOrder();
         $list_view_items = [];
 
-        if (!$list_view_sort_by && !$list_view_order) {
-            $list_view_items = $this->content
-                ->where("identifier", $content_type)
+        if (!$list_view_sort_by) {
+            $list_view_items = $content_service
+                ->query($content_type)
+                ->attachFields()
                 ->get();
         }
 
         if ($list_view_sort_by && (!$list_view_order || $list_view_order === "desc")) {
-            $list_view_items = $this->content
-                ->where("content.identifier", $content_type)
-                ->leftJoin("content_fields", function($join) use($list_view_sort_by) {
-                    $join
-                        ->on("content.id", "=", "content_fields.content_id")
-                        ->where("content_fields.identifier", $list_view_sort_by);
-                })
-                ->select("content.*", "content_fields.value")
-                ->orderByDesc("content_fields.value")
+            $list_view_items = $content_service
+                ->query($content_type, $list_view_sort_by)
+                ->attachFields()
                 ->get();
         }
 
         if ($list_view_sort_by && $list_view_order === "asc") {
-            $list_view_items = $this->content
-                ->where("content.identifier", $content_type)
-                ->leftJoin("content_fields", function($join) use($list_view_sort_by) {
-                    $join
-                        ->on("content.id", "=", "content_fields.content_id")
-                        ->where("content_fields.identifier", $list_view_sort_by);
-                })
-                ->select("content.*", "content_fields.value")
-                ->orderBy("content_fields.value")
+            $list_view_items = $content_service
+                ->query($content_type, $list_view_sort_by, $list_view_order)
+                ->attachFields()
                 ->get();
         }
 
@@ -74,10 +64,10 @@ class ContentController
             $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
 
             foreach ($this->content_types->get($content_type)->getFields() as $field) {
-                $field_value = $this->content_field
-                    ->where("content_id", $item->id)
-                    ->where("identifier", $field->getIdentifier())
-                    ->first()?->value ?? "";
+
+                $field_value = array_filter($item->fields->toArray(), function(array $f) use($field) {
+                    return $f['identifier'] === $field->getIdentifier();
+                })[0]['value'] ?? "";
 
                 $fields[$field->getIdentifier()] = [
                     'name' => $field->getName(),
