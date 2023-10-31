@@ -15,7 +15,7 @@ class UploadAPIController
             return $response->json([
                 "status" => "failure",
                 "message" => "UPLOAD_PATH or UPLOAD_URL environment variable not set.",
-            ]);
+            ], 401);
         }
 
         return $response->json([

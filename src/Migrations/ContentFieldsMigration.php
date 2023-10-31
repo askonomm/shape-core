@@ -5,7 +5,7 @@ namespace Asko\Shape\Core\Migrations;
 use Illuminate\Database\Capsule\Manager as Database;
 use Asko\Shape\Core\Models\Content;
 
-class ContentFieldMigration
+class ContentFieldsMigration
 {
     public function __construct()
     {

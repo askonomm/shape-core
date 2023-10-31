@@ -5,18 +5,19 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class MarkdownField extends ContentField
+class MarkdownField extends ContentField
 {
-    public function __construct(
-        string $identifier,
-        string $name,
-        private ?string $placeholder = null,
-    ) {
-        parent::__construct(
-            identifier: $identifier,
-            name: $name,
-            injectedJs: ["htmx.min", "autoresize", "markdown_upload"]
-        );
+    private ?string $placeholder = "";
+
+    public function __construct() {
+        $this->withInjectedJs("htmx.min", "autoresize", "markdown_upload");
+    }
+
+    public function withPlaceholder(string $placeholder): self
+    {
+        $this->placeholder = $placeholder;
+
+        return $this;
     }
 
     public function getEditable(): callable

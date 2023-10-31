@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core\Controllers;
 
-use Asko\Shape\Core\Models\User;
+use Asko\Shape\Core\Models\Users;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
 use Asko\Shape\Core\ContentTypes;
@@ -18,9 +18,9 @@ use Asko\Shape\Core\Services\AuthService;
 class AdminController
 {
     public function index(
-        User $user,
-        Request $request,
-        Response $response,
+        Users        $user,
+        Request      $request,
+        Response     $response,
         ContentTypes $content_types,
     ): Response {
         // Are we set up?

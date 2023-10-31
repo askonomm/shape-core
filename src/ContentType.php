@@ -2,28 +2,57 @@
 
 namespace Asko\Shape\Core;
 
-readonly class ContentType
+class ContentType
 {
-    /**
-     * @param string $identifier
-     * @param string $name
-     * @param string $singular_name
-     * @param string $description
-     * @param ContentField[] $fields
-     * @param array $list_view_fields
-     * @param string|null $list_view_sort_by
-     * @param string|null $list_view_order
-     */
-    public function __construct(
-        private string $identifier,
-        private string $name,
-        private string $singular_name,
-        private string $description,
-        private array $fields,
-        private array $list_view_fields,
-        private ?string $list_view_sort_by = null,
-        private ?string $list_view_order = null,
-    ) {
+    private string $identifier;
+    private string $name;
+    private string $singular_name;
+    private array $fields;
+    private array $list_view_fields;
+    private ?string $list_view_sort_by = null;
+    private ?string $list_view_order = null;
+
+    public function withIdentifier(string $identifier): ContentType
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    public function withName(string $name, string $singularName = ''): ContentType
+    {
+        $this->name = $name;
+        $this->singular_name = $singularName;
+
+        return $this;
+    }
+
+    public function withFields(ContentField ...$fields): ContentType
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    public function withListViewFields(string ...$fields): ContentType
+    {
+        $this->list_view_fields = $fields;
+
+        return $this;
+    }
+
+    public function withListViewSortBy(string $sortBy): ContentType
+    {
+        $this->list_view_sort_by = $sortBy;
+
+        return $this;
+    }
+
+    public function withListViewOrder(string $order): ContentType
+    {
+        $this->list_view_order = $order;
+
+        return $this;
     }
 
     public function getIdentifier(): string
@@ -41,11 +70,6 @@ readonly class ContentType
         return $this->singular_name;
     }
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
     public function getFields(): array
     {
         return $this->fields;
@@ -53,7 +77,7 @@ readonly class ContentType
 
     public function getField(string $identifier): ?ContentField
     {
-        foreach($this->getFields() as $field) {
+        foreach ($this->getFields() as $field) {
             if ($field->getIdentifier() === $identifier) {
                 return $field;
             }

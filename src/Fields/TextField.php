@@ -5,20 +5,36 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class TextField extends ContentField
+class TextField extends ContentField
 {
-    public function __construct(
-        string $identifier,
-        string $name,
-        private ?string $placeholder = null,
-        private ?string $prefix = null,
-        private ?string $suffix = null,
-    ) {
-        parent::__construct(
-            identifier: $identifier,
-            name: $name,
-            injectedJs: ["htmx.min"]
-        );
+    private ?string $placeholder = null;
+    private ?string $prefix = null;
+    private ?string $suffix = null;
+
+    public function __construct()
+    {
+        $this->withInjectedJs("htmx.min");
+    }
+
+    public function withPlaceholder(string $placeholder): TextField
+    {
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    public function withPrefix(string $prefix): TextField
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    public function withSuffix(string $suffix): TextField
+    {
+        $this->suffix = $suffix;
+
+        return $this;
     }
 
     public function getEditable(): callable

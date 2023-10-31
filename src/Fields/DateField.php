@@ -5,17 +5,11 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class DateField extends ContentField
+class DateField extends ContentField
 {
     public function __construct(
-        string $identifier,
-        string $name,
     ) {
-        parent::__construct(
-            identifier: $identifier,
-            name: $name,
-            injectedJs: ["htmx.min"]
-        );
+        $this->withInjectedJs("htmx.min");
     }
 
     public function getEditable(): callable

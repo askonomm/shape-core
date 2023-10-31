@@ -6,7 +6,7 @@ use Asko\Shape\Core\Services\AuthService;
 use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
-use Asko\Shape\Core\Models\User;
+use Asko\Shape\Core\Models\Users;
 use Asko\Shape\Core\ContentTypes;
 
 /** 
@@ -15,7 +15,7 @@ use Asko\Shape\Core\ContentTypes;
 readonly class LoginController
 {
     public function __construct(
-        private User     $user,
+        private Users    $user,
         private Request  $request,
         private Response $response,
     ) {

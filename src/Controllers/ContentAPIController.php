@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core\Controllers;
 
-use Asko\Shape\Core\Models\ContentField;
+use Asko\Shape\Core\Models\ContentFields;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
 use Asko\Shape\Core\Traits\Guardable;
@@ -14,7 +14,7 @@ class ContentAPIController
     public function __construct(
         private readonly Request $request,
         private readonly Response $response,
-        private readonly ContentField $content_field,
+        private readonly ContentFields $content_field,
     ) {
         $this->guard();
     }

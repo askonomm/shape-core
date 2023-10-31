@@ -4,7 +4,7 @@ namespace Asko\Shape\Core\Migrations;
 
 use Illuminate\Database\Capsule\Manager as Database;
 
-class UserMigration
+class UsersMigration
 {
     public function __construct()
     {

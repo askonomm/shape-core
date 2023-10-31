@@ -4,18 +4,39 @@ namespace Asko\Shape\Core;
 
 use Asko\Shape\Core\Interfaces\ContentFieldInterface;
 
-readonly class ContentField implements ContentFieldInterface
+class ContentField
 {
-    /**
-     * @param string $identifier
-     * @param string $name
-     */
-    public function __construct(
-        private string $identifier,
-        private string $name,
-        private array $injectedJs = [],
-        private array $injectedCss = [],
-    ) {
+    private string $identifier;
+    private string $name;
+    private array $injectedJs = [];
+    private array $injectedCss = [];
+
+    public function withIdentifier(string $identifier): self
+    {
+        $this->identifier = $identifier;
+
+        return $this;
+    }
+
+    public function withName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function withInjectedJs(string ...$js): self
+    {
+        $this->injectedJs = $js;
+
+        return $this;
+    }
+
+    public function withInjectedCss(string ...$css): self
+    {
+        $this->injectedCss = $css;
+
+        return $this;
     }
 
     public function getIdentifier(): string

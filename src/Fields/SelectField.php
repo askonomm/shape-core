@@ -5,19 +5,28 @@ namespace Asko\Shape\Core\Fields;
 use Asko\Shape\Core\ContentField;
 use Latte\Engine;
 
-readonly class SelectField extends ContentField
+class SelectField extends ContentField
 {
+    private array $options = [];
+    private ?string $defaultValue = null;
+
     public function __construct(
-        string $identifier,
-        string $name,
-        private array $options = [],
-        private ?string $defaultValue = null,
     ) {
-        parent::__construct(
-            identifier: $identifier,
-            name: $name,
-            injectedJs: ["htmx.min"]
-        );
+        $this->withInjectedJs("htmx.min");
+    }
+
+    public function withOptions(array $options): self
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function withDefaultValue(string $defaultValue): self
+    {
+        $this->defaultValue = $defaultValue;
+
+        return $this;
     }
 
     public function getEditable(): callable

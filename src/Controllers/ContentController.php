@@ -7,7 +7,7 @@ use Asko\Shape\Core\Response;
 use Asko\Shape\Core\Services\ContentService;
 use Asko\Shape\Core\Traits\Guardable;
 use Asko\Shape\Core\Models\Content;
-use Asko\Shape\Core\Models\ContentField;
+use Asko\Shape\Core\Models\ContentFields;
 use Asko\Shape\Core\ContentTypes;
 
 /**
@@ -20,7 +20,7 @@ class ContentController
     public function __construct(
         private readonly ContentTypes $content_types,
         private readonly Content $content,
-        private readonly ContentField $content_field,
+        private readonly ContentFields $content_field,
         private readonly Response $response,
     ) {
         $this->guard();
