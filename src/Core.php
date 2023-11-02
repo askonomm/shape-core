@@ -3,11 +3,6 @@
 namespace Asko\Shape\Core;
 
 use Asko\Router\Router;
-use Asko\Shape\Core\Controllers\AdminController;
-use Asko\Shape\Core\Controllers\LoginController;
-use Asko\Shape\Core\Controllers\SetupController;
-use Asko\Shape\Core\Controllers\ContentController;
-use Asko\Shape\Core\Controllers\ContentAPIController;
 use Illuminate\Database\Capsule\Manager as Database;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
@@ -20,7 +15,7 @@ class Core
     private ?Router $router = null;
 
     /**
-     * Initializes Router.
+     * Initialises Router.
      */
     public function __construct() {
         $this->router = new Router();

@@ -2,10 +2,11 @@
 
 namespace Asko\Shape\Core\Fields;
 
-use Asko\Shape\Core\ContentField;
+use Asko\Shape\Core\Field;
 use Latte\Engine;
+use Override;
 
-class SelectField extends ContentField
+class SelectField extends Field
 {
     private array $options = [];
     private ?string $defaultValue = null;
@@ -13,6 +14,22 @@ class SelectField extends ContentField
     public function __construct(
     ) {
         $this->withInjectedJs("htmx.min");
+    }
+
+    #[Override]
+    public function withIdentifier(string $identifier): self
+    {
+        parent::withIdentifier($identifier);
+
+        return $this;
+    }
+
+    #[Override]
+    public function withName(string $name): self
+    {
+        parent::withName($name);
+
+        return $this;
     }
 
     public function withOptions(array $options): self

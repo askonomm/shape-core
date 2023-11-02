@@ -7,8 +7,8 @@ use Asko\Shape\Core\Response;
 use Asko\Shape\Core\Services\ContentService;
 use Asko\Shape\Core\Traits\Guardable;
 use Asko\Shape\Core\Models\Content;
-use Asko\Shape\Core\Models\ContentFields;
-use Asko\Shape\Core\ContentTypes;
+use Asko\Shape\Core\Models\ContentField;
+use Asko\Shape\Core\Types;
 
 /**
  *
@@ -18,11 +18,12 @@ class ContentController
     use Guardable;
 
     public function __construct(
-        private readonly ContentTypes $content_types,
-        private readonly Content $content,
-        private readonly ContentFields $content_field,
-        private readonly Response $response,
-    ) {
+        private readonly Types        $content_types,
+        private readonly Content      $content,
+        private readonly ContentField $content_field,
+        private readonly Response     $response,
+    )
+    {
         $this->guard();
     }
 
@@ -30,10 +31,10 @@ class ContentController
      * @param string $content_type
      * @return Response
      */
-    public function index(ContentService $content_service, string $content_type): Response
+    public function index(ContentService $content_service, string $content_type, ?int $page): Response
     {
         $content_items = [];
-        $list_view_sort_by =  $this->content_types->get($content_type)->getListViewSortBy();
+        $list_view_sort_by = $this->content_types->get($content_type)->getListViewSortBy();
         $list_view_order = $this->content_types->get($content_type)->getListViewOrder();
         $list_view_items = [];
 
@@ -41,31 +42,31 @@ class ContentController
             $list_view_items = $content_service
                 ->query($content_type)
                 ->attachFields()
-                ->get();
+                ->paginate(10, $page ?? 1);
         }
 
         if ($list_view_sort_by && (!$list_view_order || $list_view_order === "desc")) {
             $list_view_items = $content_service
                 ->query($content_type, $list_view_sort_by)
                 ->attachFields()
-                ->get();
+                ->paginate(10, $page ?? 1);
         }
 
         if ($list_view_sort_by && $list_view_order === "asc") {
             $list_view_items = $content_service
                 ->query($content_type, $list_view_sort_by, $list_view_order)
                 ->attachFields()
-                ->get();
+                ->paginate(10, $page ?? 1);
         }
 
-        foreach($list_view_items as $item) {
+        foreach ($list_view_items as $item) {
             // Compute fields
             $fields = [];
             $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
 
             foreach ($this->content_types->get($content_type)->getFields() as $field) {
 
-                $field_value = array_filter($item->fields->toArray(), function(array $f) use($field) {
+                $field_value = array_filter($item->fields->toArray(), function (array $f) use ($field) {
                     return $f['identifier'] === $field->getIdentifier();
                 })[0]['value'] ?? "";
 
@@ -79,8 +80,10 @@ class ContentController
 
             $computed_list_view_fields = [];
 
-            foreach($list_view_fields as $field) {
-                $computed_list_view_fields[] = $fields[$field];
+            foreach ($list_view_fields as $field) {
+                if (isset($fields[$field])) {
+                    $computed_list_view_fields[] = $fields[$field];
+                }
             }
 
             // Construct items
@@ -118,7 +121,8 @@ class ContentController
      * @param int $content_id
      * @return Response
      */
-    public function edit(string $content_type, int $content_id): Response {
+    public function edit(string $content_type, int $content_id): Response
+    {
         // Compute fields
         $fields = [];
 
@@ -135,19 +139,19 @@ class ContentController
                 'editable' => $field->getEditable()($content_id, $field_value),
             ];
         }
-        
+
         // Compute injections
         $css_injections = [];
         $js_injections = [];
 
-        foreach($this->content_types->get($content_type)->getFields() as $field) {
-            foreach($field->getInjectedCss() as $css) {
+        foreach ($this->content_types->get($content_type)->getFields() as $field) {
+            foreach ($field->getInjectedCss() as $css) {
                 if (!in_array($css, $css_injections)) {
                     $css_injections[] = $css;
                 }
             }
 
-            foreach($field->getInjectedJs() as $js) {
+            foreach ($field->getInjectedJs() as $js) {
                 if (!in_array($js, $js_injections)) {
                     $js_injections[] = $js;
                 }

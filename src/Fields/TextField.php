@@ -2,10 +2,11 @@
 
 namespace Asko\Shape\Core\Fields;
 
-use Asko\Shape\Core\ContentField;
+use Asko\Shape\Core\Field;
 use Latte\Engine;
+use Override;
 
-class TextField extends ContentField
+class TextField extends Field
 {
     private ?string $placeholder = null;
     private ?string $prefix = null;
@@ -16,21 +17,37 @@ class TextField extends ContentField
         $this->withInjectedJs("htmx.min");
     }
 
-    public function withPlaceholder(string $placeholder): TextField
+    #[Override]
+    public function withIdentifier(string $identifier): self
+    {
+        parent::withIdentifier($identifier);
+
+        return $this;
+    }
+
+    #[Override]
+    public function withName(string $name): self
+    {
+        parent::withName($name);
+
+        return $this;
+    }
+
+    public function withPlaceholder(string $placeholder): self
     {
         $this->placeholder = $placeholder;
 
         return $this;
     }
 
-    public function withPrefix(string $prefix): TextField
+    public function withPrefix(string $prefix): self
     {
         $this->prefix = $prefix;
 
         return $this;
     }
 
-    public function withSuffix(string $suffix): TextField
+    public function withSuffix(string $suffix): self
     {
         $this->suffix = $suffix;
 

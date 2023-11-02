@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core\Services;
 
-use Asko\Shape\Core\Models\Users;
+use Asko\Shape\Core\Models\User;
 use Asko\Shape\Core\Request;
 
 class AuthService
@@ -11,12 +11,12 @@ class AuthService
     {
         $auth_token = (new Request())->session()->get("auth_token");
         
-        return Users::query()->where("auth_token", $auth_token)->exists();
+        return User::query()->where("auth_token", $auth_token)->exists();
     }
 
     public static function authenticates(string $email, string $password): string|false
     {
-        $user = Users::query()->where("email", $email)->first();
+        $user = User::query()->where("email", $email)->first();
 
         if (!$user) {
             return false;

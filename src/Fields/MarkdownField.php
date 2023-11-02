@@ -2,15 +2,32 @@
 
 namespace Asko\Shape\Core\Fields;
 
-use Asko\Shape\Core\ContentField;
+use Asko\Shape\Core\Field;
 use Latte\Engine;
+use Override;
 
-class MarkdownField extends ContentField
+class MarkdownField extends Field
 {
     private ?string $placeholder = "";
 
     public function __construct() {
         $this->withInjectedJs("htmx.min", "autoresize", "markdown_upload");
+    }
+
+    #[Override]
+    public function withIdentifier(string $identifier): self
+    {
+        parent::withIdentifier($identifier);
+
+        return $this;
+    }
+
+    #[Override]
+    public function withName(string $name): self
+    {
+        parent::withName($name);
+
+        return $this;
     }
 
     public function withPlaceholder(string $placeholder): self

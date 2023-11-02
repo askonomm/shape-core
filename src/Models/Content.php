@@ -11,6 +11,6 @@ class Content extends Model
 
     public function fields(): HasMany
     {
-        return $this->hasMany(ContentFields::class);
+        return $this->hasMany(ContentField::class);
     }
 }

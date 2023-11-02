@@ -6,8 +6,8 @@ use Asko\Shape\Core\Services\AuthService;
 use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
-use Asko\Shape\Core\Models\Users;
-use Asko\Shape\Core\ContentTypes;
+use Asko\Shape\Core\Models\User;
+use Asko\Shape\Core\Types;
 
 /** 
  * @author Asko Nõmm <asko@asko.dev>
@@ -15,7 +15,7 @@ use Asko\Shape\Core\ContentTypes;
 readonly class LoginController
 {
     public function __construct(
-        private Users    $user,
+        private User     $user,
         private Request  $request,
         private Response $response,
     ) {
@@ -47,11 +47,11 @@ readonly class LoginController
     /**
      * The login method is responsible for logging the user in.
      *
-     * @param ContentTypes $content_types
+     * @param Types $content_types
      * @return Response
      * @throws \Exception
      */
-    public function login(ContentTypes $content_types): Response
+    public function login(Types $content_types): Response
     {
         $validator = new Validator($this->request->post(), [
             "email" => "required|email",

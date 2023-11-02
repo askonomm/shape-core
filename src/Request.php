@@ -105,7 +105,7 @@ class Request
 
     public function userAgent(): string
     {
-        return $this->request->headers->get('Users-Agent');
+        return $this->request->headers->get('User-Agent');
     }
 
     public function isAjax(): bool

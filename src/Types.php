@@ -2,7 +2,7 @@
 
 namespace Asko\Shape\Core;
 
-class ContentTypes
+class Types
 {
     private array $content_types = [];
 
@@ -20,7 +20,7 @@ class ContentTypes
         return $this->content_types;
     }
 
-    public function get(string $slug): ?ContentType
+    public function get(string $slug): ?Type
     {
         foreach ($this->content_types as $content_type) {
             if ($content_type->getIdentifier() === $slug) {
@@ -31,7 +31,7 @@ class ContentTypes
         return null;
     }
 
-    public function first(): ?ContentType
+    public function first(): ?Type
     {
         return $this->content_types[0] ?? null;
     }

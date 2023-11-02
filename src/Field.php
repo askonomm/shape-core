@@ -2,9 +2,7 @@
 
 namespace Asko\Shape\Core;
 
-use Asko\Shape\Core\Interfaces\ContentFieldInterface;
-
-class ContentField
+class Field
 {
     private string $identifier;
     private string $name;

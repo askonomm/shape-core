@@ -4,7 +4,7 @@ namespace Asko\Shape\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Users extends Model
+class User extends Model
 {
     protected $table = "users";
 }

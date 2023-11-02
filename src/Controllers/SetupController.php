@@ -5,7 +5,7 @@ namespace Asko\Shape\Core\Controllers;
 use Asko\Shape\Core\Validator;
 use Asko\Shape\Core\Request;
 use Asko\Shape\Core\Response;
-use Asko\Shape\Core\Models\Users;
+use Asko\Shape\Core\Models\User;
 
 /**
  * Setup controller is responsible for setting up the application 
@@ -16,7 +16,7 @@ use Asko\Shape\Core\Models\Users;
 class SetupController
 {
     public function __construct(
-        private Users    $user,
+        private User     $user,
         private Request  $request,
         private Response $response,
     ) {
@@ -79,7 +79,7 @@ class SetupController
 
         // Create user
         $auth_token = bin2hex(random_bytes(32));
-        $user = new Users();
+        $user = new User();
         $user->email = $this->request->post('email');
         $user->name = $this->request->post('name');
         $user->password = password_hash($this->request->post('password'), PASSWORD_DEFAULT);

@@ -2,24 +2,24 @@
 
 namespace Asko\Shape\Core;
 
-class ContentType
+class Type
 {
     private string $identifier;
     private string $name;
     private string $singular_name;
-    private array $fields;
+    private array $fields = [];
     private array $list_view_fields;
     private ?string $list_view_sort_by = null;
     private ?string $list_view_order = null;
 
-    public function withIdentifier(string $identifier): ContentType
+    public function withIdentifier(string $identifier): Type
     {
         $this->identifier = $identifier;
 
         return $this;
     }
 
-    public function withName(string $name, string $singularName = ''): ContentType
+    public function withName(string $name, string $singularName = ''): Type
     {
         $this->name = $name;
         $this->singular_name = $singularName;
@@ -27,28 +27,28 @@ class ContentType
         return $this;
     }
 
-    public function withFields(ContentField ...$fields): ContentType
+    public function withFields(Field ...$fields): Type
     {
         $this->fields = $fields;
 
         return $this;
     }
 
-    public function withListViewFields(string ...$fields): ContentType
+    public function withListViewFields(string ...$fields): Type
     {
         $this->list_view_fields = $fields;
 
         return $this;
     }
 
-    public function withListViewSortBy(string $sortBy): ContentType
+    public function withListViewSortBy(string $sortBy): Type
     {
         $this->list_view_sort_by = $sortBy;
 
         return $this;
     }
 
-    public function withListViewOrder(string $order): ContentType
+    public function withListViewOrder(string $order): Type
     {
         $this->list_view_order = $order;
 
@@ -75,7 +75,7 @@ class ContentType
         return $this->fields;
     }
 
-    public function getField(string $identifier): ?ContentField
+    public function getField(string $identifier): ?Field
     {
         foreach ($this->getFields() as $field) {
             if ($field->getIdentifier() === $identifier) {

@@ -20,6 +20,7 @@ return function (\Asko\Router\Router $router) {
 
     // Content
     $router->get("/admin/content/{content_type}", [ContentController::class, "index"]);
+    $router->get("/admin/content/{content_type}/page/{page}", [ContentController::class, "index"]);
     $router->get("/admin/content/{content_type}/add", [ContentController::class, "add"]);
     $router->get("/admin/content/{content_type}/edit/{content_id}", [ContentController::class, "edit"]);
     $router->post("/admin/api/content/{content_id}/update-field", [ContentAPIController::class, "updateField"]);

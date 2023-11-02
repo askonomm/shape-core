@@ -5,7 +5,7 @@ namespace Asko\Shape\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ContentFields extends Model
+class ContentField extends Model
 {
     protected $table = "content_fields";
 
