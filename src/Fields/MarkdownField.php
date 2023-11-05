@@ -3,31 +3,18 @@
 namespace Asko\Shape\Core\Fields;
 
 use Asko\Shape\Core\Field;
+use Asko\Shape\Core\Traits\Fieldable;
 use Latte\Engine;
-use Override;
 
 class MarkdownField extends Field
 {
+    use Fieldable;
+
     private ?string $placeholder = "";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->withInjectedJs("htmx.min", "autoresize", "markdown_upload");
-    }
-
-    #[Override]
-    public function withIdentifier(string $identifier): self
-    {
-        parent::withIdentifier($identifier);
-
-        return $this;
-    }
-
-    #[Override]
-    public function withName(string $name): self
-    {
-        parent::withName($name);
-
-        return $this;
     }
 
     public function withPlaceholder(string $placeholder): self

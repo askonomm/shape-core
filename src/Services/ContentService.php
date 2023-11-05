@@ -18,15 +18,15 @@ class ContentService
      * @return ContentService
      */
     public function query(
-        string $identifier,
+        string  $identifier,
         ?string $sort_by = null,
-        string $order = "desc"
+        string  $order = "desc"
     ): ContentService
     {
         if ($sort_by) {
             $this->builder = Content::query()
                 ->where("content.identifier", $identifier)
-                ->leftJoin("content_fields", function(JoinClause $join) use($sort_by) {
+                ->leftJoin("content_fields", function (JoinClause $join) use ($sort_by) {
                     $join
                         ->on("content.id", "=", "content_fields.content_id")
                         ->where("content_fields.identifier", $sort_by);
@@ -50,6 +50,13 @@ class ContentService
         return $this;
     }
 
+    public function orderBy(string $column, string $order): ContentService
+    {
+        $this->builder = $this->builder->orderBy($column, $order);
+
+        return $this;
+    }
+
     /**
      * @return array|Collection
      */
@@ -64,5 +71,10 @@ class ContentService
             perPage: $per_page,
             page: $page
         )->items();
+    }
+
+    public function count(): int
+    {
+        return $this->builder->count();
     }
 }

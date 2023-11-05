@@ -18,6 +18,8 @@ return function (\Asko\Router\Router $router) {
     $router->get("/admin/setup", [SetupController::class, "index"]);
     $router->post("/admin/setup", [SetupController::class, "setup"]);
 
+    $router->get("/test", [ContentAPIController::class, "test"]);
+
     // Content
     $router->get("/admin/content/{content_type}", [ContentController::class, "index"]);
     $router->get("/admin/content/{content_type}/page/{page}", [ContentController::class, "index"]);

@@ -7,14 +7,16 @@
 {block "page_title"}Edit {$content_type->getSingularName()}{/block}
 
 {block "content"}
+    <div class="w-full relative">
+        {foreach $fields as $field}
+            <button class="absolute right-0 text-[0.65rem] uppercase font-medium text-slate-400 hover:text-indigo-700">
+                Revisions
+            </button>
 
-<div class="w-full">
-    {foreach $fields as $field}
-        <label class="block {if !$iterator->last}mb-6{/if}">
-            <span class="block mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</span>
-            <span class="block field">{$field['editable']|noescape}</span>
-        </label>
-    {/foreach}
-</div>
-
+            <label class="block {if !$iterator->last}mb-6{/if}">
+                <span class="block mb-1 text-xs uppercase text-slate-400 font-medium">{$field['name']}</span>
+                <span class="block field">{$field['editable']|noescape}</span>
+            </label>
+        {/foreach}
+    </div>
 {/block}

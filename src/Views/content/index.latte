@@ -1,18 +1,19 @@
 {varType Asko\Shape\Core\Type $content_type}
 {varType array $content_items}
 {varType int $total_results}
+{varType int $page}
 
 {layout "../_layouts/admin.latte"}
 
 {block "title"}{$content_type->getName()}{/block}
 {block "page_title"}{$content_type->getName()}{/block}
 {block "action"}
-<a href="/admin/content/{$content_type->getIdentifier()}/add" class="action-button">Add new {$content_type->getSingularName()}</a>
+<a href="/admin/content/{$content_type->getIdentifier()}/add" class="action-btn">Add {$content_type->getSingularName()}</a>
 {/block}
 
 {block "content"}
 
-<table class="border-collapse -ml-6" style="width:calc(100% + 3rem);">
+<table class="border-collapse -ml-6 content-table" style="width:calc(100% + 3rem);">
     {foreach $content_items as $item}
         {first}
             <tr>
@@ -24,8 +25,9 @@
 
         <tr class="border-b border-slate-200 hover:bg-slate-50">
             {foreach $item["list_view_fields"] as $field}
-                <td class="px-6 text-sm">
+                <td class="px-6 text-sm {first}ellipsis-cell{/first}">
                     <a
+                        title="{$field['value']}"
                         href="/admin/content/{$content_type->getIdentifier()}/edit/{$item["data"]->id}"
                         class="block py-2">
                         {$field['viewable']|noescape}
@@ -36,6 +38,20 @@
     {/foreach}
 </table>
 
-<div class="mt-6 text-xs font-medium text-slate-400">Total of {$total_results} items.</div>
+<div class="mt-6 text-xs font-medium text-slate-400 flex justify-between">
+    <div>
+        Page {$page} of {ceil($total_results / 15)}. Total of {$total_results} items.
+    </div>
+
+    <div>
+        {if $page > 1}
+            <a href="/admin/content/{$content_type->getIdentifier()}/page/{$page - 1}" class="paginate-btn">Previous</a>
+        {/if}
+
+        {if $page < ceil($total_results / 15)}
+            <a href="/admin/content/{$content_type->getIdentifier()}/page/{$page + 1}" class="paginate-btn">Next</a>
+        {/if}
+    </div>
+</div>
 
 {/block}

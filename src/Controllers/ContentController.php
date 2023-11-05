@@ -22,17 +22,17 @@ class ContentController
         private readonly Content      $content,
         private readonly ContentField $content_field,
         private readonly Response     $response,
-    )
-    {
+    ) {
         $this->guard();
     }
 
     /**
-     * @param string $content_type
+     * @param string $content_type 
      * @return Response
      */
     public function index(ContentService $content_service, string $content_type, ?int $page): Response
     {
+        $per_page = 15;
         $content_items = [];
         $list_view_sort_by = $this->content_types->get($content_type)->getListViewSortBy();
         $list_view_order = $this->content_types->get($content_type)->getListViewOrder();
@@ -42,33 +42,33 @@ class ContentController
             $list_view_items = $content_service
                 ->query($content_type)
                 ->attachFields()
-                ->paginate(10, $page ?? 1);
+                ->orderBy("content.id", "desc")
+                ->paginate($per_page, $page ?? 1);
         }
 
         if ($list_view_sort_by && (!$list_view_order || $list_view_order === "desc")) {
             $list_view_items = $content_service
                 ->query($content_type, $list_view_sort_by)
                 ->attachFields()
-                ->paginate(10, $page ?? 1);
+                ->orderBy("content.id", "desc")
+                ->paginate($per_page, $page ?? 1);
         }
 
         if ($list_view_sort_by && $list_view_order === "asc") {
             $list_view_items = $content_service
                 ->query($content_type, $list_view_sort_by, $list_view_order)
                 ->attachFields()
-                ->paginate(10, $page ?? 1);
+                ->orderBy("content.id", "desc")
+                ->paginate($per_page, $page ?? 1);
         }
 
+        $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
+
         foreach ($list_view_items as $item) {
-            // Compute fields
             $fields = [];
-            $list_view_fields = $this->content_types->get($content_type)->getListViewFields();
 
             foreach ($this->content_types->get($content_type)->getFields() as $field) {
-
-                $field_value = array_filter($item->fields->toArray(), function (array $f) use ($field) {
-                    return $f['identifier'] === $field->getIdentifier();
-                })[0]['value'] ?? "";
+                $field_value = $item->fields->where("identifier", $field->getIdentifier())->first()?->value ?? "";
 
                 $fields[$field->getIdentifier()] = [
                     'name' => $field->getName(),
@@ -98,7 +98,8 @@ class ContentController
             "content_type" => $this->content_types->get($content_type),
             "content_types" => $this->content_types->all(),
             "content_items" => $content_items,
-            "total_results" => count($content_items),
+            "total_results" => $content_service->query($content_type)->count(),
+            "page" => $page ?? 1,
             "shape_version" => Core::version(),
         ]);
     }

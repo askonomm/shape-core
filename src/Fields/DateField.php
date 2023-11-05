@@ -3,30 +3,16 @@
 namespace Asko\Shape\Core\Fields;
 
 use Asko\Shape\Core\Field;
+use Asko\Shape\Core\Traits\Fieldable;
 use Latte\Engine;
-use Override;
 
 class DateField extends Field
 {
-    public function __construct(
-    ) {
+    use Fieldable;
+
+    public function __construct()
+    {
         $this->withInjectedJs("htmx.min");
-    }
-
-    #[Override]
-    public function withIdentifier(string $identifier): self
-    {
-        parent::withIdentifier($identifier);
-
-        return $this;
-    }
-
-    #[Override]
-    public function withName(string $name): self
-    {
-        parent::withName($name);
-
-        return $this;
     }
 
     public function getEditable(): callable
